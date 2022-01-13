@@ -1,0 +1,15 @@
+<h2>Todos</h2>
+
+<div class="addItem">
+    Neues Todo: <input type="text" [(ngModel)]="todoDescription"> <input type="date" [(ngModel)]="todoDueDate"> <button (click)="addTodo()">Hinzufügen</button>
+</div>
+
+<p>Done anzeigen: <input type="checkbox" [(ngModel)]="showDone"></p>
+
+<div *ngFor="let item of todoListService.getTodos(showDone ? undefined : false)">
+    <button (click)="todoListService.toggleDoneStateById(item.id)">Done</button> 
+    <button (click)="todoListService.deleteTodoById(item.id)">Löschen</button> 
+    <span [ngStyle]="{'text-decoration': (item.doneDate ? 'line-through' : 'none')}">{{ item.dueDate | date: 'EE, dd.MM.' }} {{ item.description }}</span>
+</div>
+
+<p>Todo: {{ todoListService.getTodos(false).length }}<br/>Done: {{ todoListService.getTodos(true).length }}</p>
